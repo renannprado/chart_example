@@ -1,24 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html ng-app="chartExampleApp">
     <head>
         <title>Chart Example</title>
         <link href="css/style.css" rel="stylesheet" type="text/css"/>
     </head>
-    <body ng-app="chartExampleApp">
-        <nav>
+    <body>
+        <nav ng-controller="NavController">
             <img id="sapLogo" alt="SAP" src="assets/sap_logo.png"/>
             <h3>Net Sales</h3>
             <select>
+                <option selected disabled hidden value=""></option>
                 <option>2014</option>
                 <option>2015</option>
                 <option>2016</option>
             </select>
-            <select>
+            <select >
+                <option selected disabled hidden value=""></option>
                 <option>Category 1</option>
                 <option>Category 2</option>
                 <option>Category 3</option>
             </select>
             <select>
+                <option selected disabled hidden value=""></option>
                 <option>Sub-Category 1</option>
                 <option>Sub-Category 2</option>
                 <option>Sub-Category 3</option>
