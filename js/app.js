@@ -91,7 +91,7 @@ chartExampleApp.factory('SalesInfoFactory', function salesInfoFactory($http)
          */
         getSalesInformation: function(year, category, subcategory)
         {
-            return $http.get("/assets/nets-sales.json");        
+            return $http.get("assets/nets-sales.json");        
         }
     };
     
