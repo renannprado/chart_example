@@ -42,21 +42,30 @@ chartExampleApp.controller("CirclesController", function circleControllerFunctio
     $scope.circles.leftMargin = 20;
     $scope.reportData = [];
     $scope.selectedCircle = -1;
+    $scope.reportParamters = null;
     
     $scope.onCircleClick = function(index)
     {
-         $scope.selectedCircle = index;
-         $rootScope.$emit("onCircleSelection", $scope.reportData[$scope.selectedCircle]);
+        if (index !== $scope.selectedCircle)
+        {
+            $scope.selectedCircle = index;
+            $rootScope.$emit("onCircleSelection", {
+                    "parameters": $scope.reportParamters,
+                    "data": $scope.reportData[$scope.selectedCircle]
+                }
+            );
+        }
     };
     
     $rootScope.$on("onFinishedSelection", function(evt, params)
     { 
-        console.log(params);
+//        console.log(params);
+        $scope.reportParamters = params;
         
         SalesInfoFactory.getSalesInformation(params.selectedYear, params.selectedCategoryId, params.selectedSubCategoryId).then(function(response)
         {
             $scope.reportData = response.data;
-            // set a default selecected circle
+            // set a default selected circle
             $scope.onCircleClick(0);
         });
     });
@@ -64,17 +73,113 @@ chartExampleApp.controller("CirclesController", function circleControllerFunctio
 
 chartExampleApp.controller("BarChartController", function circleControllerFunction($rootScope, $scope, SalesInfoFactory)
 {
+//    $scope.year = 123;
+    
     $rootScope.$on("onCircleSelection", function (evt, params)
     { 
+        $scope.report = params;
         
+        var 
+            workingDataSet = $scope.report.data.country_data.yearly_distribution,
+            svgWidth = document.getElementById("barChart").clientWidth,
+            svgHeight = document.getElementById("barChart").clientHeight,
+            barWidth = 20,
+//            margin = svgWidth / workingDataSet.length - barWidth,
+            svg = d3.select("#barChart > svg"),
+            padding = 5;
+        
+//        console.log("svgWidth / dataset.length - padding", svgWidth / workingDataSet.length - padding);
+      
+//        console.log("Received", workingDataSet);
+      
+        // cleaning the svg for the new chart
+        svg.remove();
+        svg = d3.select("#barChart").append("svg");
+        
+        
+        var margin = {top: 0, right: 0, bottom: 40, left: 200},
+            width = svgWidth - margin.left - margin.right,
+            height = svgHeight - margin.top - margin.bottom;
+        
+        var x = d3.scale.ordinal().rangeRoundBands([0, width], .05);
+        var y = d3.scale.linear().range([height, 0]);
+
+        var xAxis = d3.svg.axis()
+                .scale(x)
+                .orient("bottom");
+        
+        var yAxis = d3.svg.axis()
+                .scale(y)
+                .orient("left")
+                .ticks(10);
+        
+        svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+                
+        x.domain(workingDataSet.map(function(d) { return d.quarter; }));
+        y.domain([0, d3.max(workingDataSet, function(d) { return d.sales.substring(0, d.sales.length - 1); })]);
+        
+        svg.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height + ")")
+                .call(xAxis)
+                .selectAll("text")
+                .style("text-anchor", "end")
+                .attr("dx", "-.8em")
+                .attr("dy", "-.55em")
+                .attr("transform", "rotate(-90)");
+        
+        svg.append("g")
+                .attr("class", "y axis")
+                .call(yAxis)
+                .append("text")
+                .attr("transform", "rotate(-90)")
+                .attr("y", 6)
+                .attr("dy", ".71em")
+                .style("text-anchor", "end")
+                .text("Sales");
+        
+        svg.selectAll("bar")
+                .data(workingDataSet)
+                .enter().append("rect")
+                .style("fill", "steelblue")
+                .attr("x", function (d) {
+                    return x(d.quarter);
+                })
+                .attr("width", x.rangeBand())
+                .attr("y", function (d) {
+                    return y(d.sales.substring(0, d.sales.length - 1));
+                })
+                .attr("height", function (d) {
+                    return height - y(d.sales.substring(0, d.sales.length - 1));
+                });
+        
+        //Create SVG element
+//        svg.selectAll("rect")
+//                .data(workingDataSet)
+//                .enter()
+//                .append("rect")
+//                .attr("fill", "red")
+//                .attr("x", function (d, i) 
+//                {
+//                    return i * (svgWidth / workingDataSet.length);  //Bar width of 20 plus 1 for padding
+//                })
+//                .attr("y", function (d, i)
+//                {
+//                    return svgHeight - d.sales.substring(0, d.sales.length - 1);
+//                })
+//                .attr("width", svgWidth / workingDataSet.length - padding)
+//                .attr("height", function (d, i)
+//                {
+//                    return d.sales.substring(0, d.sales.length - 1);
+//                });
     });
 });
 
 chartExampleApp.controller("InformationTableController", function circleControllerFunction($rootScope, $scope, SalesInfoFactory)
 {
-    $rootScope.$on("onFinishedSelection", function(evt, params)
+    $rootScope.$on("onCircleSelection", function (evt, params)
     { 
-        console.log(params);
+        
     });
 });
 
@@ -135,7 +240,7 @@ chartExampleApp.factory('SalesInfoFactory', function salesInfoFactory($http)
          * @param {type} subcategory
          * @returns {unresolved}
          */
-        getSalesInformation: function(year, category, subcategory)
+        getSalesInformation: function(year, categoryId, subCategoryId)
         {
             return $http.get("assets/nets-sales.json");        
         }
