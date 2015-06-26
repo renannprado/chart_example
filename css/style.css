@@ -53,6 +53,10 @@ nav > div > select {
     margin-top: 25px;
 }
 
+.selectedReportCircle {
+    fill: #0066ff;
+}
+
 .reportCircle > svg > circle:hover {
     fill: red;
 }
