@@ -3,7 +3,7 @@
 // creating the angular app
 var chartExampleApp = angular.module("chartExampleApp", ["ngRoute", "ngResource"]);
 
-chartExampleApp.controller("NavController", function navigationController($scope, SalesInfoFactory)
+chartExampleApp.controller("NavController", function navigationControllerFunction($rootScope, $scope, SalesInfoFactory)
 {  
     $scope.init = function()
     {
@@ -28,16 +28,42 @@ chartExampleApp.controller("NavController", function navigationController($scope
     $scope.onSubCategoryChange = function(selectedSubCategoryId)
     {
         $scope.reportInfo.selectedSubCategoryId = selectedSubCategoryId;
-        SalesInfoFactory.getSalesInformation(123,"asd", "asd2").then(function(response)
-        {
-           console.log(response);
-        });
         
-        console.log($scope.reportInfo);
+        $rootScope.$emit("onFinishedSelection", $scope.reportInfo);        
     };
     
-    
     $scope.init();
+});
+
+chartExampleApp.controller("CirclesController", function circleControllerFunction($rootScope, $scope, SalesInfoFactory)
+{
+    $scope.circles = { };
+    $scope.circles.radius = 90;
+    $scope.circles.leftMargin = 20;
+    $scope.reportData = [];
+    
+    $scope.onCircleClick = function(index)
+    {
+        alert(index);
+    };
+    
+    $rootScope.$on("onFinishedSelection", function(evt, params)
+    { 
+        console.log(params);
+        
+        SalesInfoFactory.getSalesInformation(params.selectedYear, params.selectedCategoryId, params.selectedSubCategoryId).then(function(response)
+        {
+            $scope.reportData = response.data;
+        });
+    });
+});
+
+chartExampleApp.directive("salesCircle", function()
+{
+    return {
+        restrict: "E",
+        templateUrl: "assets/reportCircle.html"
+    };
 });
 
 chartExampleApp.factory('SalesInfoFactory', function salesInfoFactory($http)

@@ -3,6 +3,41 @@
     Author     : Renann
 */
 
-select {
-    width: 100px;
+#encloserDiv {
+    width: 80%;
+    margin: 0 auto;
+}
+
+nav {
+    height: 50px;
+}
+
+nav > div {
+    display: inline-block;
+    float: right;
+    margin-top: 20px;
+}
+
+h1 {
+    display: inline-block;
+    margin: 0 0 0 45px; 
+    padding: 0;
+    height: 100%;
+    vertical-align: top;
+    line-height: 50px;
+}
+
+#sapLogo {
+    height: 50px;
+}
+
+nav > div > select {
+    width: 120px;
+    vertical-align: super;
+}
+
+.reportCircle {
+    display: inline-block; 
+    margin-left: 15%; 
+    margin-top: 25px;
 }
