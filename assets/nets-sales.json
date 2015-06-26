@@ -57,19 +57,19 @@
             "yearly_distribution": [
                 {
                     "quarter": "Q1",
-                    "sales": "20M"
+                    "sales": "3M"
                 },
                 {
                     "quarter": "Q2",
-                    "sales": "30M"
+                    "sales": "1M"
                 },
                 {
                     "quarter": "Q3",
-                    "sales": "18M"
+                    "sales": "2M"
                 },
                 {
                     "quarter": "Q4",
-                    "sales": "16M"
+                    "sales": "1M"
                 }
             ],
             "best_sellers": [
@@ -104,23 +104,23 @@
     {
         "name": "Country 3",
         "country_data": {
-            "net_sales": "84M",
-            "yearly_distribution": [
+            "net_sales": "10M",
+             "yearly_distribution": [
                 {
                     "quarter": "Q1",
-                    "sales": "20M"
+                    "sales": "2M"
                 },
                 {
                     "quarter": "Q2",
-                    "sales": "30M"
+                    "sales": "3M"
                 },
                 {
                     "quarter": "Q3",
-                    "sales": "18M"
+                    "sales": "4M"
                 },
                 {
                     "quarter": "Q4",
-                    "sales": "16M"
+                    "sales": "1M"
                 }
             ],
             "best_sellers": [
