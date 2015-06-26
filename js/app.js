@@ -38,7 +38,7 @@ chartExampleApp.controller("NavController", function navigationControllerFunctio
 chartExampleApp.controller("CirclesController", function circleControllerFunction($rootScope, $scope, SalesInfoFactory)
 {
     $scope.circles = { };
-    $scope.circles.radius = 90;
+    $scope.circles.radius = 75;
     $scope.circles.leftMargin = 20;
     $scope.reportData = [];
     
@@ -55,6 +55,22 @@ chartExampleApp.controller("CirclesController", function circleControllerFunctio
         {
             $scope.reportData = response.data;
         });
+    });
+});
+
+chartExampleApp.controller("BarChartController", function circleControllerFunction($rootScope, $scope, SalesInfoFactory)
+{
+    $rootScope.$on("onFinishedSelection", function(evt, params)
+    { 
+        console.log(params);
+    });
+});
+
+chartExampleApp.controller("InformationTableController", function circleControllerFunction($rootScope, $scope, SalesInfoFactory)
+{
+    $rootScope.$on("onFinishedSelection", function(evt, params)
+    { 
+        console.log(params);
     });
 });
 
