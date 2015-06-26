@@ -10,26 +10,26 @@ chartExampleApp.controller("NavController", function navigationControllerFunctio
         $scope.availableYears = SalesInfoFactory.getAvailableYearReports();        
         $scope.availableCategories = [];
         $scope.availableSubCategories = [];
-        $scope.reportInfo = { };
+        $scope.reportLoadParams = { };
     };   
     
     $scope.onYearSelect = function(selectedYear)
     {
         $scope.availableCategories = SalesInfoFactory.getCategoryByYear(selectedYear);
-        $scope.reportInfo.selectedYear = selectedYear;
+        $scope.reportLoadParams.selectedYear = selectedYear;
     };
     
     $scope.onCategoryChange = function(selectedCategoryId)
     {
         $scope.availableSubCategories = SalesInfoFactory.getSubCategoryByCategory(selectedCategoryId);
-        $scope.reportInfo.selectedCategoryId = selectedCategoryId;
+        $scope.reportLoadParams.selectedCategoryId = selectedCategoryId;
     };
     
     $scope.onSubCategoryChange = function(selectedSubCategoryId)
     {
-        $scope.reportInfo.selectedSubCategoryId = selectedSubCategoryId;
+        $scope.reportLoadParams.selectedSubCategoryId = selectedSubCategoryId;
         
-        $rootScope.$emit("onFinishedSelection", $scope.reportInfo);        
+        $rootScope.$emit("onFinishedSelection", $scope.reportLoadParams);        
     };
     
     $scope.init();
@@ -41,10 +41,12 @@ chartExampleApp.controller("CirclesController", function circleControllerFunctio
     $scope.circles.radius = 75;
     $scope.circles.leftMargin = 20;
     $scope.reportData = [];
+    $scope.selectedCircle = -1;
     
     $scope.onCircleClick = function(index)
     {
-        alert(index);
+         $scope.selectedCircle = index;
+         $rootScope.$emit("onCircleSelection", $scope.reportData[$scope.selectedCircle]);
     };
     
     $rootScope.$on("onFinishedSelection", function(evt, params)
@@ -54,15 +56,17 @@ chartExampleApp.controller("CirclesController", function circleControllerFunctio
         SalesInfoFactory.getSalesInformation(params.selectedYear, params.selectedCategoryId, params.selectedSubCategoryId).then(function(response)
         {
             $scope.reportData = response.data;
+            // set a default selecected circle
+            $scope.onCircleClick(0);
         });
     });
 });
 
 chartExampleApp.controller("BarChartController", function circleControllerFunction($rootScope, $scope, SalesInfoFactory)
 {
-    $rootScope.$on("onFinishedSelection", function(evt, params)
+    $rootScope.$on("onCircleSelection", function (evt, params)
     { 
-        console.log(params);
+        
     });
 });
 
