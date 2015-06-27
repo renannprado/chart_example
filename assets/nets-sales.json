@@ -127,27 +127,27 @@
                 {
                     "name": "Product A",
                     "units": "76000",
-                    "total": "5M"
+                    "total": "38M"
                 },
                 {
                     "name": "Product B",
                     "units": "76000",
-                    "total": "5M"
+                    "total": "15M"
                 },
                 {
                     "name": "Product C",
                     "units": "76000",
-                    "total": "5M"
+                    "total": "10M"
                 },
                 {
                     "name": "Product D",
                     "units": "76000",
-                    "total": "5M"
+                    "total": "25M"
                 },
                 {
                     "name": "Product F",
                     "units": "76000",
-                    "total": "5M"
+                    "total": "44M"
                 }
             ]
         }
