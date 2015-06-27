@@ -126,22 +126,22 @@
             "best_sellers": [
                 {
                     "name": "Product A",
-                    "units": "76000",
+                    "units": "7640",
                     "total": "38M"
                 },
                 {
                     "name": "Product B",
-                    "units": "76000",
+                    "units": "3214",
                     "total": "15M"
                 },
                 {
                     "name": "Product C",
-                    "units": "76000",
+                    "units": "55566",
                     "total": "10M"
                 },
                 {
                     "name": "Product D",
-                    "units": "76000",
+                    "units": "72075",
                     "total": "25M"
                 },
                 {

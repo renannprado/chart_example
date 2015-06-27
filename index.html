@@ -42,7 +42,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr ng-class-even="rowEven" ng-class-odd="rowOdd" ng-repeat="bestSellerProduct in report.data.country_data.best_sellers">
+                            <tr ng-class-even="'rowEven'" ng-class-odd="'rowOdd'" ng-repeat="bestSellerProduct in report.data.country_data.best_sellers">
                                 <td>{{bestSellerProduct.name}}</td>
                                 <td>{{bestSellerProduct.units}}</td>
                                 <td>{{bestSellerProduct.total}}</td>
