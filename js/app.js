@@ -38,7 +38,7 @@ chartExampleApp.controller("NavController", function navigationControllerFunctio
 chartExampleApp.controller("CirclesController", function circleControllerFunction($rootScope, $scope, SalesInfoFactory)
 {
     $scope.circles = { };
-    $scope.circles.radius = 75;
+    $scope.circles.radius = 100;
     $scope.circles.leftMargin = 20;
     $scope.reportData = [];
     $scope.selectedCircle = -1;
@@ -58,8 +58,7 @@ chartExampleApp.controller("CirclesController", function circleControllerFunctio
     };
     
     $rootScope.$on("onFinishedSelection", function(evt, params)
-    { 
-//        console.log(params);
+    {
         $scope.reportParameters = params;
         
         SalesInfoFactory.getSalesInformation(params.selectedYear, params.selectedCategoryId, params.selectedSubCategoryId).then(function(response)
@@ -84,7 +83,6 @@ chartExampleApp.controller("BarChartController", function circleControllerFuncti
             svgWidth = document.getElementById("barChart").clientWidth,
             svgHeight = document.getElementById("barChart").clientHeight,
             barWidth = 20,
-//            margin = svgWidth / workingDataSet.length - barWidth,
             svg = d3.select("#barChart > svg"),
             padding = 5;
         
@@ -99,10 +97,9 @@ chartExampleApp.controller("BarChartController", function circleControllerFuncti
       
         // cleaning the svg for the new chart
         svg.remove();
-        svg = d3.select("#barChart").append("svg");
+        svg = d3.select("#barChart").append("svg");        
         
-        
-        var margin = {top: 0, right: 0, bottom: 40, left: 200},
+        var margin = {top: 0, right: 0, bottom: 40, left: 150},
             width = svgWidth - margin.left - margin.right,
             height = svgHeight - margin.top - margin.bottom;
         
@@ -147,8 +144,9 @@ chartExampleApp.controller("BarChartController", function circleControllerFuncti
                 .data(workingDataSet)
                 .enter().append("rect")
                 .style("fill", "steelblue")
-                .attr("x", function (d) {
-                    return x(d.quarter);
+                .attr("x", function (d) 
+                {
+                    return x(d.quarter) + 10;
                 })
                 .attr("width", x.rangeBand())
                 .attr("y", function (d) {
