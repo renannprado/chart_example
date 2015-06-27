@@ -92,3 +92,7 @@ nav > div > select {
     float: right; 
     margin-top: 10px;
 }
+
+.hide {
+    display: none !important;
+}

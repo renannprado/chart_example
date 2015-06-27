@@ -72,10 +72,11 @@ chartExampleApp.controller("CirclesController", function circleControllerFunctio
 
 chartExampleApp.controller("BarChartController", function circleControllerFunction($rootScope, $scope, SalesInfoFactory)
 {
-//    $scope.year = 123;
+    $scope.show = false;
     
     $rootScope.$on("onCircleSelection", function (evt, params)
     { 
+        $scope.show = true;
         $scope.report = params;
         
         var 

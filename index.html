@@ -29,7 +29,7 @@
                 <sales-circle ng-repeat="report in reportData"></sales-circle>
             </div>
             <div ng-controller="BarChartController" id="barChart">
-                <b>Net Sales for {{report.data.name}} in year {{report.parameters.selectedYear}}</b>
+                <b ng-class="{hide: !show}">Net Sales for {{report.data.name}} in year {{report.parameters.selectedYear}}</b>
             </div>
             <div ng-controller="InformationTableController" id="informationTable">
                
