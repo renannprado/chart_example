@@ -181,9 +181,12 @@ chartExampleApp.controller("BarChartController", function circleControllerFuncti
 
 chartExampleApp.controller("InformationTableController", function circleControllerFunction($rootScope, $scope, SalesInfoFactory)
 {
+    $scope.show = false;
+    
     $rootScope.$on("onCircleSelection", function (evt, params)
     { 
-        
+          $scope.show = true;
+          $scope.report = params;
     });
 });
 

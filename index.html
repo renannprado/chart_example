@@ -31,8 +31,24 @@
             <div ng-controller="BarChartController" id="barChart">
                 <b ng-class="{hide: !show}">Net Sales for {{report.data.name}} in year {{report.parameters.selectedYear}}</b>
             </div>
-            <div ng-controller="InformationTableController" id="informationTable">
-               
+            <div ng-class="{hide: !show}" ng-controller="InformationTableController" id="informationTable">
+                <b >Best seller products</b>               
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Product</th>
+                                <th>Units</th>
+                                <th>Total</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr ng-class-even="rowEven" ng-class-odd="rowOdd" ng-repeat="bestSellerProduct in report.data.country_data.best_sellers">
+                                <td>{{bestSellerProduct.name}}</td>
+                                <td>{{bestSellerProduct.units}}</td>
+                                <td>{{bestSellerProduct.total}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
             </div>
         </div>
         <!-- putting at the end for faster page load -->
