@@ -88,9 +88,14 @@ chartExampleApp.controller("BarChartController", function circleControllerFuncti
             svg = d3.select("#barChart > svg"),
             padding = 5;
         
-//        console.log("svgWidth / dataset.length - padding", svgWidth / workingDataSet.length - padding);
-      
-//        console.log("Received", workingDataSet);
+        // refactoring the substring call to a member method of the workingDataSet json
+        for (var i = 0; i < workingDataSet.length; i++)
+        {
+            workingDataSet[i].getSalesNumber = function()
+            {
+                return this.sales.substring(0, this.sales.length - 1);
+            };
+        }
       
         // cleaning the svg for the new chart
         svg.remove();
@@ -116,7 +121,7 @@ chartExampleApp.controller("BarChartController", function circleControllerFuncti
         svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
                 
         x.domain(workingDataSet.map(function(d) { return d.quarter; }));
-        y.domain([0, d3.max(workingDataSet, function(d) { return d.sales.substring(0, d.sales.length - 1); })]);
+        y.domain([0, d3.max(workingDataSet, function(d) { return d.getSalesNumber(); })]);
         
         svg.append("g")
                 .attr("class", "x axis")
@@ -147,10 +152,10 @@ chartExampleApp.controller("BarChartController", function circleControllerFuncti
                 })
                 .attr("width", x.rangeBand())
                 .attr("y", function (d) {
-                    return y(d.sales.substring(0, d.sales.length - 1));
+                    return y(d.getSalesNumber());
                 })
                 .attr("height", function (d) {
-                    return height - y(d.sales.substring(0, d.sales.length - 1));
+                    return height - y(d.getSalesNumber());
                 });
         
         //Create SVG element
