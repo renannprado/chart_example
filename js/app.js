@@ -42,7 +42,7 @@ chartExampleApp.controller("CirclesController", function circleControllerFunctio
     $scope.circles.leftMargin = 20;
     $scope.reportData = [];
     $scope.selectedCircle = -1;
-    $scope.reportParamters = null;
+    $scope.reportParameters = null;
     
     $scope.onCircleClick = function(index)
     {
@@ -50,7 +50,7 @@ chartExampleApp.controller("CirclesController", function circleControllerFunctio
         {
             $scope.selectedCircle = index;
             $rootScope.$emit("onCircleSelection", {
-                    "parameters": $scope.reportParamters,
+                    "parameters": $scope.reportParameters,
                     "data": $scope.reportData[$scope.selectedCircle]
                 }
             );
@@ -60,7 +60,7 @@ chartExampleApp.controller("CirclesController", function circleControllerFunctio
     $rootScope.$on("onFinishedSelection", function(evt, params)
     { 
 //        console.log(params);
-        $scope.reportParamters = params;
+        $scope.reportParameters = params;
         
         SalesInfoFactory.getSalesInformation(params.selectedYear, params.selectedCategoryId, params.selectedSubCategoryId).then(function(response)
         {
