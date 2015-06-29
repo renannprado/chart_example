@@ -158,6 +158,26 @@ chartExampleApp.controller("BarChartController", function circleControllerFuncti
                 .attr("height", function (d) {
                     return height - y(d.getSalesNumber());
                 });
+                
+        svg.selectAll("bar").data(workingDataSet)
+                .enter()
+                .append("text")
+                .text(function (d) 
+                {
+                    return d.sales;
+                })
+                .attr("x", function (d, i) 
+                {
+                    return i * (x.rangeBand() + 10) + 100;
+                })
+                .attr("y", function (d, i) 
+                {                    
+                    return y(d.getSalesNumber()) - 2; // -2 to be above the bars 
+                })
+                .attr("font-family", "sans-serif")
+                .attr("font-size", "25px")
+                .attr("fill", "black")
+                .attr("text-anchor", "middle");
     });
 });
 
