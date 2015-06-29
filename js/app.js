@@ -100,7 +100,7 @@ chartExampleApp.controller("BarChartController", function circleControllerFuncti
         svg.remove();
         svg = d3.select("#barChart").append("svg");        
         
-        var margin = {top: 0, right: 0, bottom: 40, left: 150},
+        var margin = {top: 50, right: 20, bottom: 50, left: 50},
             width = svgWidth - margin.left - margin.right,
             height = svgHeight - margin.top - margin.bottom;
         
@@ -116,7 +116,8 @@ chartExampleApp.controller("BarChartController", function circleControllerFuncti
                 .orient("left")
                 .ticks(10);
         
-        svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        // svg receives the g element back because everything should be under this element so the transform is applied to all
+        svg = svg.append("g").attr("transform", "translate(" + margin.left + "," + margin.top + ")");
                 
         x.domain(workingDataSet.map(function(d) { return d.quarter; }));
         y.domain([0, d3.max(workingDataSet, function(d) { return d.getSalesNumber(); })]);
@@ -147,35 +148,16 @@ chartExampleApp.controller("BarChartController", function circleControllerFuncti
                 .style("fill", "steelblue")
                 .attr("x", function (d) 
                 {
-                    return x(d.quarter) + 10;
+                    return x(d.quarter) + 20; // +20 not to cover the "Sales" text in the Y axis
                 })
-                .attr("width", x.rangeBand())
-                .attr("y", function (d) {
-                    return y(d.getSalesNumber());
+                .attr("width", x.rangeBand() - 20) // -20 so the bars don't get too big
+                .attr("y", function (d) 
+                {
+                    return y(d.getSalesNumber()); 
                 })
                 .attr("height", function (d) {
                     return height - y(d.getSalesNumber());
                 });
-        
-        //Create SVG element
-//        svg.selectAll("rect")
-//                .data(workingDataSet)
-//                .enter()
-//                .append("rect")
-//                .attr("fill", "red")
-//                .attr("x", function (d, i) 
-//                {
-//                    return i * (svgWidth / workingDataSet.length);  //Bar width of 20 plus 1 for padding
-//                })
-//                .attr("y", function (d, i)
-//                {
-//                    return svgHeight - d.sales.substring(0, d.sales.length - 1);
-//                })
-//                .attr("width", svgWidth / workingDataSet.length - padding)
-//                .attr("height", function (d, i)
-//                {
-//                    return d.sales.substring(0, d.sales.length - 1);
-//                });
     });
 });
 
